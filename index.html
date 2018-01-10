@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Mandelbrot Viewer</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/manifest.json">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<script>
+if (navigator.serviceWorker && !(navigator.mozApps && navigator.mozApps.installPackage)) {
+	navigator.serviceWorker.register('sw.js');
+}
+</script>
+<link rel="stylesheet" href="style.css">
+<script src="js/bigdecimal-all-last.js" defer></script>
+<script src="js/mandelbrot.js" defer></script>
+</head>
+<body>
+<div id="flex">
+<div id="controls">
+   <div class="group">
+      <p><button id="restoreButton" title="Restore default limits, image size, palette, max iterations."><img src="img/home.svg" alt=""><span>Restore Defaults</span></button>
+      <button id="stop" title="Abort the current computation, if any, leaving an incomplete image." disabled><img src="img/cancel.svg" alt=""><span>Stop</span></button></p>
+   </div>
+   <div class="group">
+      <p><label title="How many steps in the Mandelbrot iteration before giving up and coloring the pixel black.">MaxIterations: <select id="maxIterSelect">
+         <option value="25">25</option>
+         <option value="50">50</option>
+         <option value="100">100</option>
+         <option value="250" selected>250</option>
+         <option value="500">500</option>
+         <option value="1000">1000</option>
+         <option value="2500">2500</option>
+         <option value="5000">5000</option>
+         <option value="10000">10000</option>
+         <option value="25000">25000</option>
+         <option value="50000">50000</option>
+         <option value="Custom">Custom</option>
+      </select></label><span id="custommaxiter" style="display:none"><br><input class="number5" id="maxiterinput" type="number" min="10" step="1"> <button id="maxiterapply">Apply</button></span></p>
+   </div>
+   <div class="group">
+      <p><button id="undo" disabled><img src="img/undo.svg" alt=""><span>Undo (not possible)</span></button>
+      <button id="redo" disabled><img src="img/redo.svg" alt=""><span>Redo (not possible)</span></button></p>
+   </div>
+   <div class="group">
+      <p><label title="Size of the color palette for pixels outside the Mandebrot set.">PaletteLength: <select id="paletteLengthSelect">
+            <option value="Match">= MaxIter</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="250" selected>250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2500">2500</option>
+            <option value="5000">5000</option>
+            <option value="Custom">Custom</option>
+      </select></label><span id="custompallen" style="display:none"><br><input class="number4" id="palleninput" type="number" min="1" step="1"><button id="pallenapply">Apply</button></span>
+      </p><p><label title="Offsets the colors within the palette to get a different mapping">PaletteOffset: <select id="paletteOffsetSelect">
+            <option value="0" selected>None</option>
+            <option value="0.1">10%</option>
+            <option value="0.2">20%</option>
+            <option value="0.3">30%</option>
+            <option value="0.4">40%</option>
+            <option value="0.5">50%</option>
+            <option value="0.6">60%</option>
+            <option value="0.7">70%</option>
+            <option value="0.8">80%</option>
+            <option value="0.9">90%</option>
+            <option value="Custom">Custom</option>
+      </select></label><span id="custoffset" style="display:none"><br><input class="number5" id="offsetinput" type="number" min="0" max="100"><b>%</b> &nbsp;<button id="offsetapply">Apply</button></span></p>
+      <p><select id="standardPaletteSelect">
+            <option value="Spectrum" selected>Spectrum</option>
+            <option value="EarthAndSky">EarthAndSky</option>
+            <option value="HotAndCold">HotAndCold</option>
+            <option value="TreeColors">Forest</option>
+            <option value="Seashore">Seashore</option>
+            <option value="Fire">Fire</option>
+            <option value="Red/Cyan">Red/Cyan</option>
+            <option value="Blue/Gold">Blue/Gold</option>
+            <option value="Grayscale">Grayscale</option>
+            <option value="CyclicGrayscale">CyclicGrayscale</option>
+            <option value="Random">Random</option>
+            <option value="Random">More Random</option>
+      </select></p>
+   </div>
+   <div class="group">
+      <p><button id="downloadImage" title="Save current view as PNG image."><img src="img/download.svg" alt=""><span>Save image</span></button>
+      <button id="importXML" title="Put up an input box into which you can copy-and-paste the XML code for an example, or get the XML for the current example."><img src="img/code.svg" alt=""><span>Show XML Import/Export</span></button></p>
+   </div>
+   <div class="group">
+      <p><label title="Width and height of the Mandelbrot picture, in pixels.">Image Size: <select id="imagesize">
+          <option value="Auto" selected>Auto</option>
+          <option value="200 150">200x150</option>
+          <option value="400 300">400x300</option>
+          <option value="640 480">640x480</option>
+          <option value="800 600">800x600</option>
+          <option value="1024 768">1024x768</option>
+          <option value="1200 900">1200x900</option>
+          <option value="1600 900">1600x900</option>
+          <option value="425 550">425x550</option>
+          <option value="850 1100">850x1100</option>
+          <option value="Custom">Custom</option>
+      </select></label><span id="customsize" style="display:none"><br><input class="number4" id="customwidth" type="number" min="50" max="2500" step="1">x<input class="number4" id="customheight" type="number" min="50" max="2500" step="1"> <button id="applysize">Apply</button></span></p>
+   </div>
+   <div class="group">
+      <p><button id="zoomin"><img src="img/zoom-in.svg" alt=""><span>Zoom in by: </span></button> <select id="zoomInAmount">
+           <option value="0.5">2 X</option>
+           <option value="0.2">5 X</option>
+           <option value="0.1" selected>10 X</option>
+           <option value="0.05">20 X</option>
+           <option value="0.02">50 X</option>
+           <option value="0.01">100 X</option>
+           <option value="0.001">1,000 X</option>
+           <option value="0.00001">10,000 X</option>
+           <option value="0.000001">100,000 X</option>
+      </select></p>
+      <p><button id="zoomout"><img src="img/zoom-out.svg" alt=""><span>Zoom out by: </span></button> <select id="zoomOutAmount">
+           <option value="2">2 X</option>
+           <option value="5">5 X</option>
+           <option value="10" selected>10 X</option>
+           <option value="20">20 X</option>
+           <option value="50">50 X</option>
+           <option value="100">100 X</option>
+           <option value="1000">1,000 X</option>
+           <option value="10000">10,000 X</option>
+           <option value="100000">100,000 X</option>
+      </select></p>
+   </div>
+   <div class="group">
+      <p><label title="If checked, lines in image are computed out of order."><input id="interlaced" checked type="checkbox">Interlaced Drawing</label></p>
+      <p><label title="If checked, extra computations are done that can often give the completed image a smoother look."><input id="secondpass" checked type="checkbox">Do a Second Pass</label></p>
+      <p><label title="Increasing this might speed up computation by using more of your computer's processing time.">Workers: <select id="threadCountSelect">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+      </select></label></p>
+   </div>
+   <div class="group">
+      <p>Based on <a href="http://math.hws.edu/eck/js/mandelbrot/MB.html" target="_blank" rel="noopener">Mandelbrot Viewer</a> by <a href="http://math.hws.edu/eck/index.html" target="_blank" rel="noopener">David Eck</a>.</p>
+   </div>
+</div>
+<div id="imagediv">
+  <p id="status"><noscript>Sorry, this page requires JavaScript.</noscript></p>
+  <canvas id="canvas" width="800" height="600"></canvas>
+</div>
+</div>
+
+<div id="xmlimportbg">
+</div>
+<div id="xmlimport">
+<p>Mandelbrot examples can be coded as "XML documents." You can copy-and-paste the XML code for an example into this text input box. Click "Apply" to import the example.  Click "Cancel" or press ESC to cancel. The "Grab Current Example" button loads the XML for the example that is currently shown in the program; this allows you to save the example (or even edit it by hand).</p>
+<p><button style="margin-left:50px" id="applyXMLimport">Apply</button>
+<button style="margin-left:20px" id="cancelXMLimport">Cancel</button>
+<button style="margin-left:20px" id="grabcurrent">Grab Current Example</button></p>
+<p><textarea rows="21" cols="55" id="XMLtextinput" placeholder="XML code goes here"></textarea>
+</p></div>
+</body></html>

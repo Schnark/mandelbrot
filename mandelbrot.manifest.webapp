@@ -1,0 +1,16 @@
+{
+	"version": "1.0",
+	"name": "Mandelbrot",
+	"description": "Explore Mandelbrot fractal",
+	"size": 128729,
+	"package_path": "http://localhost:8080/mandelbrot.zip",
+	"icons": {
+		"128": "/img/icon-128.png",
+		"512": "/img/icon-512.png"
+	},
+	"developer": {
+		"name": "Michael Müller",
+		"url": "https://github.com/Schnark"
+	},
+	"default_locale": "en"
+}

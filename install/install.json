@@ -1,0 +1,17 @@
+{
+	"@comment": "Note that the code to transform these data into a webpage is in https://github.com/Schnark/schnark.github.io",
+	"title": {
+		"en": "Mandelbrot – App for Firefox OS",
+		"de": "Mandelbrot – App für Firefox OS"
+	},
+	"serviceworker": true,
+	"icon": "img/icon-128.png",
+	"screenshots": [
+		"l.png#landscape",
+		"p.png"
+	],
+	"desc": {
+		"en": ["This app allows you to explore the Mandelbrot fractal.", "To zoom in, just draw a rectangle over the area you are interested in. You can also change the maximal iteration count and the color scheme. There are even more parameters, but you probably won’t need them.", "You can save interesting images as PNG.", "Note that some functions work best with a desktop browser and may have degraded usability on small screens."],
+		"de": ["Diese App lässt dich das Mandelbrot-Fraktal erkunden.", "Um hineinzuzomen musst du nur ein Rechteck über die Fläche ziehen, die dich interessiert. Du kannst auch die maximale Zahl der Iterationen verändern und das Farbscheme. Es gibt auch noch weitere Parameter, aber du wirst sie vermutlich nicht benötigen.", "Du kannst interessante Bilder als PNG speichern.", "Beachte, dass einige Funktionen am besten mit einem Desktopbrowser funktionieren und auf kleinen Bildschirmen schwerer zu bedienen sind."]
+	}
+}

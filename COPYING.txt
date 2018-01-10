@@ -1,0 +1,9 @@
+Based on http://math.hws.edu/eck/js/mandelbrot/MB.html, which has the
+following license:
+
+Web page written by David Eck, http://math.hws.edu/eck/index.html
+You can do anything you like with this web page and with the code, but
+if you use a substantial portion of it, you should include attribution.
+
+Turned into a web app (especially for Firefox OS) by https://github.com/Schnark.
+The above terms apply to my changes as well.

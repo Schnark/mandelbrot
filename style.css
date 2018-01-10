@@ -1,0 +1,208 @@
+body {
+	background-color: #D8D8D8;
+}
+canvas {
+	background-color: #BBBBBB;
+	display: block;
+}
+#controls {
+	background-color: white;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+	padding: 0;
+	margin-right: 10px;
+	width: 15em;
+	float: left;
+}
+#controls p {
+	margin: 12px 0;
+}
+#controls button {
+	margin: 6px 0;
+}
+div.group {
+	padding: 0 8px;
+	border-bottom: 2px solid black;
+}
+#imagediv {
+	margin-left: 16em;
+	padding: 0;
+	position: relative;
+}
+#status {
+	font-weight: bold;
+	color: #AA0000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	margin-left: 1em;
+	background: rgba(255, 255, 255, 0.7);
+	pointer-events: none;
+}
+#xmlimportbg {
+	position: fixed;
+	z-index: 10;
+	opacity: 0.7;
+	background-color: black;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+#xmlimport {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50px;
+	max-width: 25em;
+	z-index: 20;
+	padding: 10px;
+	margin: auto;
+	background-color: #D8D8FF;
+	border: 2px solid #000099;
+	border-radius: 16px;
+	box-shadow: 5px 5px 8px black;
+	display: none;
+}
+textarea {
+	white-space: pre;
+	word-wrap: normal;
+	overflow-x: scroll;
+}
+
+button img {
+	width: 2em;
+	height: 2em;
+	display: inline-block;
+	margin-right: 0.5em;
+	vertical-align: middle;
+}
+button:disabled img {
+	opacity: 0.5;
+}
+
+select {
+	padding: 0.4em 0;
+	min-width: 5em;
+}
+
+.number4 {
+	width: 4em;
+}
+.number5 {
+	width: 5em;
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	#flex {
+		height: 100%;
+	}
+	button img + span {
+		display: none; /*this leaves users who can't see images with no text, but these users won't
+		be using this app anyway*/
+	}
+	button img {
+		margin-right: 0;
+	}
+	#controls {
+		max-height: 100%;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		overflow: auto;
+		width: 9em;
+		border: 0;
+		padding-left: 2px;
+	}
+	#controls p {
+		margin: 6px 0;
+	}
+	div.group {
+		padding: 0 2px;
+		border-bottom: 1px solid #999;
+	}
+	#imagediv {
+		margin-left: 10em;
+	}
+	@supports (display: flex) {
+		#flex {
+			display: flex;
+		}
+		#controls {
+			flex: 1 0;
+			min-width: 9em;
+		}
+		#imagediv {
+			margin: 0;
+		}
+	}
+}
+
+@media (max-width: 800px) and (orientation: portrait) {
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	#flex {
+		height: 100%;
+	}
+	button img + span {
+		display: none;
+	}
+	button img {
+		margin-right: 0;
+	}
+	#controls {
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		overflow: auto;
+		width: 100%;
+		float: none;
+		height: 20em;
+		margin: 0;
+		padding-bottom: 1em;
+		border: 0;
+		-moz-column-width: 10em;
+		-moz-column-gap: 5px;
+		-moz-column-rule: 1px solid #999;
+		-webkit-column-width: 10em;
+		-webkit-column-gap: 5px;
+		-webkit-column-rule: 1px solid #999;
+		column-width: 10em;
+		column-gap: 5px;
+		column-rule: 1px solid #999;
+	}
+	#controls p {
+		margin: 6px 0;
+	}
+	div.group {
+		-webkit-column-break-inside: avoid;
+		page-break-inside: avoid;
+		break-inside: avoid-column;
+		padding: 2px 4px;
+		border-bottom: 1px solid #999;
+	}
+	#imagediv {
+		margin-left: 0;
+	}
+	@supports (display: flex) {
+		#flex {
+			display: flex;
+			flex-direction: column;
+		}
+		#controls {
+			flex: 1 1;
+			height: auto;
+		}
+	}
+}
